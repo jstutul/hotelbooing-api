@@ -34,11 +34,15 @@ export const login = async (req, res, next) => {
       { id: user._id, isAdmin: user.isAdmin },
       process.env.JWT
     );
-    const { password, isAdmin, ...otherDetails } = user;
-    res
-      .cookie("access_token", token, { httpOnly: true })
-      .status(200)
-      .json({ ...otherDetails });
+    const { password, isAdmin } = user;
+
+    res.cookie("access_token", token, { httpOnly: true }).status(200).json({
+      id: user._id,
+      isAdmin: user.isAdmin,
+      email: user.email,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    });
   } catch (err) {
     next(err);
   }
