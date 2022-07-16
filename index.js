@@ -29,7 +29,7 @@ mongoose.connection.on("connected", () => {
 });
 
 app.get("/", (req, res) => {
-  res.send("Hello Every One");
+  res.send("THIS IS HOTEL API");
 });
 
 app.use("/api/auth", authRoute);
