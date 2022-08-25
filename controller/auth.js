@@ -35,9 +35,10 @@ export const login = async (req, res, next) => {
       process.env.JWT
     );
     const { password, isAdmin } = user;
-
+      
     res.cookie("access_token", token, { httpOnly: true }).status(200).json({
       id: user._id,
+      username:user.username,
       isAdmin: user.isAdmin,
       email: user.email,
       createdAt: user.createdAt,
