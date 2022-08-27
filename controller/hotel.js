@@ -44,7 +44,6 @@ export const getHotel = async (req, res, next) => {
 
 export const getHotels = async (req, res, next) => {
   const { min, max, ...others } = req.query;
-  console.log(min, max);
   try {
     const hotels = await Hotel.find({
       ...others,
@@ -90,11 +89,13 @@ export const countByType = async (req, res, next) => {
 export const getHotelRooms = async (req, res, next) => {
   try {
     const hotel = await Hotel.findById(req.params.id);
+    console.log(hotel.rooms);
     const list = await Promise.all(
       hotel.rooms.map((room) => {
         return Room.findById(room);
       })
     );
+    console.log(list);
     return res.status(200).json(list);
   } catch (err) {
     next(err);
