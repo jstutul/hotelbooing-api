@@ -34,16 +34,15 @@ export const login = async (req, res, next) => {
       { id: user._id, isAdmin: user.isAdmin },
       process.env.JWT
     );
-    const { password, isAdmin } = user;
-      
-    res.cookie("access_token", token, { httpOnly: true }).status(200).json({
-      id: user._id,
-      username:user.username,
-      isAdmin: user.isAdmin,
-      email: user.email,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
-    });
+    const { password, isAdmin, ...otherDetails } = user._doc;
+
+    res
+      .cookie("access_token", token, { httpOnly: true })
+      .status(200)
+      .json({
+        details: { ...otherDetails },
+        isAdmin,
+      });
   } catch (err) {
     next(err);
   }
